@@ -16,14 +16,22 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
+import com.example.nanittask.main.MainNavDestinations
 
 @Composable
-fun ConnectionScreen(viewModel: ConnectionScreenViewModel = hiltViewModel()) {
+fun ConnectionScreen(
+    viewModel: ConnectionScreenViewModel = hiltViewModel(),
+    navController: NavController
+) {
     val state = viewModel.state.collectAsState()
     ConnectionComponent(
         connectionScreenState = state.value,
         onIpAddressChanged = { viewModel.onIpAddressChanged(it) },
-        onConnectClicked = { viewModel.onConnectClicked() }
+        onConnectClicked = {
+            viewModel.onConnectClicked()
+            navController.navigate(MainNavDestinations.Birthday.route)
+        }
     )
 }
 
