@@ -1,0 +1,153 @@
+package com.example.nanittask.birthday
+
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.nanittask.ColorTheme
+import com.example.nanittask.R
+import com.example.nanittask.ui.theme.ElephantBackground
+import com.example.nanittask.ui.theme.FoxBackground
+import com.example.nanittask.ui.theme.PelicanBackground
+
+fun decideBackgroundColor(colorTheme: ColorTheme) =
+    when (colorTheme) {
+        ColorTheme.ELEPHANT -> {
+            ElephantBackground
+        }
+
+        ColorTheme.FOX -> {
+            FoxBackground
+        }
+
+        ColorTheme.PELICAN -> {
+            PelicanBackground
+        }
+    }
+
+@Composable
+fun BirthdayScreen(viewModel: BirthdayScreenViewModel = hiltViewModel()) {
+    val state = viewModel.state.collectAsState()
+    BirthdayComponent(screenState = state.value)
+}
+
+@Composable
+fun BirthdayComponent(screenState: BirthdayScreenState) {
+    Surface(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(color = decideBackgroundColor(screenState.theme)),
+    ) {
+        ConstraintLayout {
+            val (nameText, sumupText, ageItem, leftSwirl, rightSwirl, babyImage, babyPlaceholder, nanitLogo, backgroundImage) = createRefs()
+            Text(text = "Today ${screenState.name} is", modifier = Modifier.constrainAs(nameText) {
+                top.linkTo(parent.top, margin = 20.dp)
+                start.linkTo(parent.start)
+                end.linkTo(parent.end)
+            })
+            Image(
+                painter = painterResource(id = decideAgePainterResource(screenState.age)),
+                contentDescription = "Age",
+                modifier = Modifier.constrainAs(ageItem) {
+                    top.linkTo(nameText.bottom, margin = 13.dp)
+                    start.linkTo(nameText.start)
+                    end.linkTo(nameText.end)
+                })
+            Image(
+                painter = painterResource(id = R.drawable.left_swirls),
+                contentDescription = "Left swirls",
+                modifier = Modifier.constrainAs(leftSwirl) {
+                    top.linkTo(ageItem.top)
+                    bottom.linkTo(ageItem.bottom)
+                    end.linkTo(ageItem.start, margin = 22.dp)
+                })
+            Image(
+                painterResource(id = R.drawable.right_swirls),
+                contentDescription = "Right swirls",
+                modifier = Modifier.constrainAs(rightSwirl) {
+                    top.linkTo(ageItem.top)
+                    bottom.linkTo(ageItem.bottom)
+                    start.linkTo(ageItem.end, margin = 22.dp)
+                })
+            Text(text = "months old!", modifier = Modifier.constrainAs(sumupText) {
+                top.linkTo(ageItem.bottom, margin = 14.dp)
+                start.linkTo(nameText.start)
+                end.linkTo(nameText.end)
+            })
+            Image(
+                painterResource(id = decideKidPainterResource(screenState.theme)),
+                contentDescription = "Kid",
+                modifier = Modifier.constrainAs(babyPlaceholder) {
+                    top.linkTo(sumupText.bottom, margin = 15.dp)
+                    start.linkTo(parent.start, margin = 50.dp)
+                    end.linkTo(parent.end, margin = 50.dp)
+                })
+            Image(
+                painterResource(id = R.drawable.nanit_logo),
+                contentDescription = "Nanit logo",
+                modifier = Modifier.constrainAs(nanitLogo) {
+                    top.linkTo(babyPlaceholder.bottom, margin = 15.dp)
+                    start.linkTo(babyPlaceholder.start)
+                    end.linkTo(babyPlaceholder.end)
+                })
+            Image(
+                painter = painterResource(id = decideBackgroundPainterResource(screenState.theme)),
+                contentDescription = "Background",
+                modifier = Modifier.constrainAs(backgroundImage) {
+                    start.linkTo(parent.start)
+                    end.linkTo(parent.end)
+                    bottom.linkTo(parent.bottom)
+                }
+            )
+        }
+    }
+}
+
+fun decideBackgroundPainterResource(theme: ColorTheme): Int {
+    return when (theme) {
+        ColorTheme.ELEPHANT -> R.mipmap.bg_android_elephant
+        ColorTheme.FOX -> R.mipmap.bg_android_fox
+        ColorTheme.PELICAN -> R.mipmap.bg_android_pelican
+    }
+}
+
+@Preview
+@Composable
+private fun BirthdayScreenPreview() {
+    BirthdayComponent(screenState = BirthdayScreenState(theme = ColorTheme.PELICAN))
+}
+
+fun decideKidPainterResource(theme: ColorTheme): Int {
+    return when (theme) {
+        ColorTheme.ELEPHANT -> R.drawable.kid_round_elephant
+        ColorTheme.FOX -> R.drawable.kid_round_fox
+        ColorTheme.PELICAN -> R.drawable.kid_round_pelican
+    }
+}
+
+fun decideAgePainterResource(age: Int): Int {
+    return when (age) {
+        1 -> R.drawable.one
+        2 -> R.drawable.two
+        3 -> R.drawable.three
+        4 -> R.drawable.four
+        5 -> R.drawable.five
+        6 -> R.drawable.six
+        7 -> R.drawable.seven
+        8 -> R.drawable.eight
+        9 -> R.drawable.nine
+        10 -> R.drawable.ten
+        11 -> R.drawable.eleven
+        12 -> R.drawable.twelve
+        else -> R.drawable.one
+    }
+}
