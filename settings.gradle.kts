@@ -22,3 +22,4 @@ dependencyResolutionManagement {
 rootProject.name = "Nanit Task"
 include(":app")
 include(":data")
+include(":domain")

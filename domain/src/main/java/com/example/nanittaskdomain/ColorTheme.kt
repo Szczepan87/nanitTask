@@ -1,4 +1,4 @@
-package com.example.nanittask
+package com.example.nanittaskdomain
 
 enum class ColorTheme(val themeName:String) {
     ELEPHANT("elephant"),

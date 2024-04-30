@@ -3,11 +3,10 @@ plugins {
     alias(libs.plugins.jetbrainsKotlinAndroid)
     kotlin("kapt")
     alias(libs.plugins.hiltPlugin)
-    alias(libs.plugins.kotlinSerialization)
 }
 
 android {
-    namespace = "com.example.nanittask.data"
+    namespace = "com.example.nanittaskdomain"
     compileSdk = 34
 
     defaultConfig {
@@ -37,18 +36,14 @@ android {
 
 dependencies {
 
+    implementation(project(":data"))
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
 
-    implementation(libs.ktor.client.core)
-    implementation(libs.ktor.client.cio)
-    implementation(libs.ktor.client.websockets)
-
     implementation(libs.hilt.android)
     kapt(libs.hilt.android.compiler)
-
-    implementation(libs.kotlinx.serialization.json)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

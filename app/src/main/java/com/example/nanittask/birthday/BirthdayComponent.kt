@@ -13,23 +13,23 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.example.nanittask.ColorTheme
+import com.example.nanittaskdomain.ColorTheme
 import com.example.nanittask.R
 import com.example.nanittask.ui.theme.ElephantBackground
 import com.example.nanittask.ui.theme.FoxBackground
 import com.example.nanittask.ui.theme.PelicanBackground
 
-fun decideBackgroundColor(colorTheme: ColorTheme) =
+fun decideBackgroundColor(colorTheme: com.example.nanittaskdomain.ColorTheme) =
     when (colorTheme) {
-        ColorTheme.ELEPHANT -> {
+        com.example.nanittaskdomain.ColorTheme.ELEPHANT -> {
             ElephantBackground
         }
 
-        ColorTheme.FOX -> {
+        com.example.nanittaskdomain.ColorTheme.FOX -> {
             FoxBackground
         }
 
-        ColorTheme.PELICAN -> {
+        com.example.nanittaskdomain.ColorTheme.PELICAN -> {
             PelicanBackground
         }
     }
@@ -112,25 +112,25 @@ fun BirthdayComponent(screenState: BirthdayScreenState) {
     }
 }
 
-fun decideBackgroundPainterResource(theme: ColorTheme): Int {
+fun decideBackgroundPainterResource(theme: com.example.nanittaskdomain.ColorTheme): Int {
     return when (theme) {
-        ColorTheme.ELEPHANT -> R.mipmap.bg_android_elephant
-        ColorTheme.FOX -> R.mipmap.bg_android_fox
-        ColorTheme.PELICAN -> R.mipmap.bg_android_pelican
+        com.example.nanittaskdomain.ColorTheme.ELEPHANT -> R.mipmap.bg_android_elephant
+        com.example.nanittaskdomain.ColorTheme.FOX -> R.mipmap.bg_android_fox
+        com.example.nanittaskdomain.ColorTheme.PELICAN -> R.mipmap.bg_android_pelican
     }
 }
 
 @Preview
 @Composable
 private fun BirthdayScreenPreview() {
-    BirthdayComponent(screenState = BirthdayScreenState(theme = ColorTheme.PELICAN))
+    BirthdayComponent(screenState = BirthdayScreenState(theme = com.example.nanittaskdomain.ColorTheme.PELICAN))
 }
 
-fun decideKidPainterResource(theme: ColorTheme): Int {
+fun decideKidPainterResource(theme: com.example.nanittaskdomain.ColorTheme): Int {
     return when (theme) {
-        ColorTheme.ELEPHANT -> R.drawable.kid_round_elephant
-        ColorTheme.FOX -> R.drawable.kid_round_fox
-        ColorTheme.PELICAN -> R.drawable.kid_round_pelican
+        com.example.nanittaskdomain.ColorTheme.ELEPHANT -> R.drawable.kid_round_elephant
+        com.example.nanittaskdomain.ColorTheme.FOX -> R.drawable.kid_round_fox
+        com.example.nanittaskdomain.ColorTheme.PELICAN -> R.drawable.kid_round_pelican
     }
 }
 
