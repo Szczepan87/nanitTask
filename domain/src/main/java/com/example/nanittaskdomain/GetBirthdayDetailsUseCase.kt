@@ -6,6 +6,7 @@ import kotlinx.coroutines.channels.consumeEach
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
+import java.time.Instant
 import java.time.LocalDateTime
 import java.time.ZoneOffset
 import javax.inject.Inject
@@ -32,6 +33,7 @@ class GetBirthdayDetailsUseCase @Inject constructor(
     }
 
     private fun getLocalDateTime(dob: Long): LocalDateTime {
-        return LocalDateTime.ofEpochSecond(dob, 0, ZoneOffset.UTC)
+        val instant = Instant.ofEpochMilli(dob)
+        return LocalDateTime.ofInstant(instant, ZoneOffset.UTC)
     }
 }

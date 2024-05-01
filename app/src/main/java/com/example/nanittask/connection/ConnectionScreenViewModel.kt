@@ -15,8 +15,4 @@ class ConnectionScreenViewModel @Inject constructor() : ViewModel() {
     fun onIpAddressChanged(ipAddress: String) {
         _state.value = _state.value.copy(ipAddress = ipAddress)
     }
-
-    fun onConnectClicked() {
-        _state.value = _state.value.copy(isLoading = true)
-    }
 }

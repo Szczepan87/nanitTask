@@ -15,7 +15,6 @@ import kotlinx.coroutines.flow.update
 import java.time.LocalDateTime
 import java.time.temporal.ChronoUnit
 import javax.inject.Inject
-import kotlin.math.absoluteValue
 
 @HiltViewModel
 class BirthdayScreenViewModel @Inject constructor(
@@ -43,10 +42,15 @@ class BirthdayScreenViewModel @Inject constructor(
         }.launchIn(viewModelScope)
     }
 
-    // refactor to return Age object of int and flag of months or years
-    private fun calculateAge(dob: LocalDateTime): Int {
+    private fun calculateAge(dob: LocalDateTime): Age {
         val currentDateTime = LocalDateTime.now()
-        return ChronoUnit.MONTHS.between(dob, currentDateTime).toInt().absoluteValue
+        val differenceInMonths = ChronoUnit.MONTHS.between(dob, currentDateTime)
+        return if (differenceInMonths < 12) {
+            Age(differenceInMonths.toInt(), isInMonths = true)
+        } else {
+            val differenceInYears = ChronoUnit.YEARS.between(dob, currentDateTime)
+            Age(differenceInYears.toInt(), isInMonths = false)
+        }
     }
 
     override fun onCleared() {

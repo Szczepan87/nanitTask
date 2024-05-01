@@ -1,3 +1,16 @@
 <resources>
     <string name="app_name">Nanit Task</string>
+    <string name="connection_label">IP Address</string>
+    <string name="connection_button_text">Connect</string>
+    <string name="birthday_header_title">Today %1$s is</string>
+    <string name="birthday_age_value_content_description">Age</string>
+    <string name="birthday_age_left_decoarator_content_description">Left swirls</string>
+    <string name="birthday_age_right_decorator_content_description">Right swirls</string>
+    <string name="birthday_image_placeholder_content_description">Child placeholder image</string>
+    <string name="birthday_nanit_logo_content_description">Nanit logo</string>
+    <string name="birthday_background_content_description">Background</string>
+    <string name="birthday_month_singular_subtitle">month old!</string>
+    <string name="birthday_month_plural_subtitle">months old!</string>
+    <string name="birthday_year_singular_subtitle">year old!</string>
+    <string name="birthday_year_plural_subtitle">years old!</string>
 </resources>
