@@ -30,7 +30,7 @@ fun ConnectionScreen(
         onIpAddressChanged = { viewModel.onIpAddressChanged(it) },
         onConnectClicked = {
             viewModel.onConnectClicked()
-            navController.navigate(MainNavDestinations.Birthday.route)
+            navController.navigate(MainNavDestinations.Birthday.createRoute(it))
         }
     )
 }
@@ -39,7 +39,7 @@ fun ConnectionScreen(
 fun ConnectionComponent(
     connectionScreenState: ConnectionScreenState,
     onIpAddressChanged: (String) -> Unit = {},
-    onConnectClicked: () -> Unit = {}
+    onConnectClicked: (String) -> Unit = {}
 ) {
     Surface(modifier = Modifier.fillMaxSize()) {
         Column(modifier = Modifier.fillMaxSize()) {
@@ -53,7 +53,10 @@ fun ConnectionComponent(
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
             )
 
-            Button(onClick = onConnectClicked, modifier = Modifier.padding(16.dp)) {
+            Button(
+                onClick = { onConnectClicked(connectionScreenState.ipAddress) },
+                modifier = Modifier.padding(16.dp)
+            ) {
                 Text(text = "Connect")
             }
         }

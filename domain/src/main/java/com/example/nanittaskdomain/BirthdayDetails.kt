@@ -2,6 +2,4 @@ package com.example.nanittaskdomain
 
 import java.time.LocalDateTime
 
-class BirthdayDetails(name: String, dob: LocalDateTime, theme: ColorTheme) {
-
-}
+data class BirthdayDetails(val name: String, val dob: LocalDateTime, val theme: ColorTheme)

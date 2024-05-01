@@ -18,6 +18,5 @@ class ConnectionScreenViewModel @Inject constructor() : ViewModel() {
 
     fun onConnectClicked() {
         _state.value = _state.value.copy(isLoading = true)
-        // TODO implement connection logic
     }
 }

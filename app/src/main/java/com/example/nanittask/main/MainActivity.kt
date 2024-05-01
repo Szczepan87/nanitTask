@@ -12,10 +12,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.core.view.WindowCompat
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.example.nanittask.birthday.BirthdayScreen
 import com.example.nanittask.connection.ConnectionScreen
 import com.example.nanittask.ui.theme.NanitTaskTheme
@@ -40,7 +43,12 @@ class MainActivity : ComponentActivity() {
                     composable(MainNavDestinations.Connection.route) {
                         ConnectionScreen(navController = navController)
                     }
-                    composable(MainNavDestinations.Birthday.route) {
+                    composable(
+                        route = MainNavDestinations.Birthday.route,
+                        arguments = listOf(navArgument(ARG_IP_ADDRESS) {
+                            type = NavType.StringType
+                        })
+                    ) {
                         BirthdayScreen()
                     }
                 }
