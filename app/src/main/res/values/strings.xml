@@ -14,4 +14,5 @@
     <string name="birthday_year_singular_subtitle">year old!</string>
     <string name="birthday_year_plural_subtitle">years old!</string>
     <string name="birthday_camera_icon_content_description">Add picture icon</string>
+    <string name="birthday_image_actual_content_description">Actual baby image</string>
 </resources>

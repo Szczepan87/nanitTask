@@ -1,14 +1,25 @@
 package com.example.nanittask.birthday
 
 import android.content.Context
+import android.net.Uri
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -16,6 +27,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.hilt.navigation.compose.hiltViewModel
+import coil.compose.AsyncImage
 import com.example.nanittask.R
 import com.example.nanittask.ui.theme.ElephantBackground
 import com.example.nanittask.ui.theme.FoxBackground
@@ -30,6 +42,22 @@ fun BirthdayScreen(viewModel: BirthdayScreenViewModel = hiltViewModel()) {
 
 @Composable
 fun BirthdayComponent(screenState: BirthdayScreenState) {
+    var imageUri by rememberSaveable {
+        mutableStateOf<Uri?>(null)
+    }
+    val launcher = rememberLauncherForActivityResult(
+        contract =
+        ActivityResultContracts.GetContent()
+    ) { uri: Uri? ->
+        imageUri = uri
+    }
+    val requestPermission = rememberLauncherForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ) { isGranted: Boolean ->
+        if (isGranted) {
+            launcher.launch("image/*")
+        }
+    }
     Surface(
         modifier = Modifier
             .fillMaxSize()
@@ -90,13 +118,23 @@ fun BirthdayComponent(screenState: BirthdayScreenState) {
                     painterResource(id = decideCameraIcon(screenState.theme)),
                     contentDescription = stringResource(
                         R.string.birthday_camera_icon_content_description
-                    )
+                    ),
+                    modifier = Modifier.clickable {
+                        requestPermission.launch(android.Manifest.permission.CAMERA)
+                        requestPermission.launch(android.Manifest.permission.READ_EXTERNAL_STORAGE)
+                    }
                 )
             }, loadedImage = {
-                Image(
-                    painterResource(id = decideKidPainterResource(screenState.theme)),
-                    contentDescription = stringResource(R.string.birthday_image_placeholder_content_description)
-                )
+                imageUri?.let {
+                    AsyncImage(
+                        model = it,
+                        contentDescription = stringResource(R.string.birthday_image_actual_content_description),
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .clip(shape = CircleShape),
+                        contentScale = ContentScale.Crop
+                    )
+                } ?: Unit
             })
             Image(
                 painterResource(id = R.drawable.nanit_logo),
@@ -141,12 +179,6 @@ private fun decideAgeSumupText(age: Age, context: Context): String {
             context.getString(R.string.birthday_year_plural_subtitle)
         }
     }
-}
-
-@Preview
-@Composable
-private fun BirthdayScreenPreview() {
-    BirthdayComponent(screenState = BirthdayScreenState(theme = ColorTheme.PELICAN))
 }
 
 private fun decideKidPainterResource(theme: ColorTheme): Int {
@@ -197,3 +229,9 @@ private fun decideBackgroundColor(colorTheme: ColorTheme) =
             PelicanBackground
         }
     }
+
+@Preview
+@Composable
+private fun BirthdayScreenPreview() {
+    BirthdayComponent(screenState = BirthdayScreenState(theme = ColorTheme.PELICAN))
+}

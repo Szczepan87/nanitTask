@@ -1,5 +1,6 @@
 [versions]
 agp = "8.3.1"
+coilCompose = "2.4.0"
 constraintlayoutComposeVersion = "1.0.1"
 hiltAndroid = "2.44"
 kotlin = "1.9.0"
@@ -22,6 +23,7 @@ kotlin-serialization-plugin = "1.7.10"
 [libraries]
 androidx-constraintlayout-compose = { module = "androidx.constraintlayout:constraintlayout-compose", version.ref = "constraintlayoutComposeVersion" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coilCompose" }
 hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hiltAndroid" }
 hilt-android-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hiltAndroid" }
 compose-hilt-navigation = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "navigation-compose" }

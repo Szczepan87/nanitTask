@@ -24,7 +24,7 @@ fun ChildImageComponent(
         modifier = modifier
     ) { (imagePlaceholderMesurable, cameraIconMesurable, loadedImageMesurable), constraints ->
         val imagePlaceholderPlaceable = imagePlaceholderMesurable.first().measure(constraints)
-        val loadedImagePlaceable = loadedImageMesurable.first().measure(
+        val loadedImagePlaceable = loadedImageMesurable.firstOrNull()?.measure(
             constraints.copy(
                 maxWidth = imagePlaceholderPlaceable.width - MARGIN_OFFSET,
                 maxHeight = imagePlaceholderPlaceable.height - MARGIN_OFFSET
@@ -34,7 +34,7 @@ fun ChildImageComponent(
 
         layout(imagePlaceholderPlaceable.width, imagePlaceholderPlaceable.height) {
             imagePlaceholderPlaceable.place(0, 0)
-            loadedImagePlaceable.place(MARGIN_OFFSET.div(2), MARGIN_OFFSET.div(2))
+            loadedImagePlaceable?.place(MARGIN_OFFSET.div(2), MARGIN_OFFSET.div(2))
             cameraIconPlaceable.place(
                 x = imagePlaceholderPlaceable.width - (imagePlaceholderPlaceable.width.toFloat()
                     .div(2f)).times(cos(DEGREES_45)).roundToInt(),
