@@ -32,7 +32,7 @@ fun ChildImageComponent(
         )
         val cameraIconPlaceable = cameraIconMesurable.first().measure(constraints)
 
-        layout(constraints.maxWidth, constraints.maxHeight) {
+        layout(imagePlaceholderPlaceable.width, imagePlaceholderPlaceable.height) {
             imagePlaceholderPlaceable.place(0, 0)
             loadedImagePlaceable.place(MARGIN_OFFSET.div(2), MARGIN_OFFSET.div(2))
             cameraIconPlaceable.place(

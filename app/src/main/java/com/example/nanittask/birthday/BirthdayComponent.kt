@@ -76,14 +76,28 @@ fun BirthdayComponent(screenState: BirthdayScreenState) {
                     start.linkTo(nameText.start)
                     end.linkTo(nameText.end)
                 })
-            Image(
-                painterResource(id = decideKidPainterResource(screenState.theme)),
-                contentDescription = stringResource(R.string.birthday_image_placeholder_content_description),
-                modifier = Modifier.constrainAs(babyPlaceholder) {
-                    top.linkTo(sumupText.bottom, margin = 15.dp)
-                    start.linkTo(parent.start, margin = 50.dp)
-                    end.linkTo(parent.end, margin = 50.dp)
-                })
+            ChildImageComponent(modifier = Modifier.constrainAs(babyPlaceholder) {
+                top.linkTo(sumupText.bottom, margin = 15.dp)
+                start.linkTo(parent.start, margin = 50.dp)
+                end.linkTo(parent.end, margin = 50.dp)
+            }, imagePlaceholder = {
+                Image(
+                    painterResource(id = decideKidPainterResource(screenState.theme)),
+                    contentDescription = stringResource(R.string.birthday_image_placeholder_content_description)
+                )
+            }, cameraIcon = {
+                Image(
+                    painterResource(id = decideCameraIcon(screenState.theme)),
+                    contentDescription = stringResource(
+                        R.string.birthday_camera_icon_content_description
+                    )
+                )
+            }, loadedImage = {
+                Image(
+                    painterResource(id = decideKidPainterResource(screenState.theme)),
+                    contentDescription = stringResource(R.string.birthday_image_placeholder_content_description)
+                )
+            })
             Image(
                 painterResource(id = R.drawable.nanit_logo),
                 contentDescription = stringResource(R.string.birthday_nanit_logo_content_description),
@@ -105,7 +119,15 @@ fun BirthdayComponent(screenState: BirthdayScreenState) {
     }
 }
 
-fun decideAgeSumupText(age: Age, context: Context): String {
+private fun decideCameraIcon(theme: ColorTheme): Int {
+    return when (theme) {
+        ColorTheme.ELEPHANT -> R.drawable.camera_elephant
+        ColorTheme.FOX -> R.drawable.camera_fox
+        ColorTheme.PELICAN -> R.drawable.camera_pelican
+    }
+}
+
+private fun decideAgeSumupText(age: Age, context: Context): String {
     return if (age.isInMonths) {
         if (age.age == 1) {
             context.getString(R.string.birthday_month_singular_subtitle)

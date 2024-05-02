@@ -13,4 +13,5 @@
     <string name="birthday_month_plural_subtitle">months old!</string>
     <string name="birthday_year_singular_subtitle">year old!</string>
     <string name="birthday_year_plural_subtitle">years old!</string>
+    <string name="birthday_camera_icon_content_description">Add picture icon</string>
 </resources>
